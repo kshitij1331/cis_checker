@@ -1,0 +1,12 @@
+rules:
+  - id: "1.1"
+    description: "Ensure permission on /etc/securetty"
+    check: "stat -c '%a' /etc/securetty"
+    fix: "chmod 600 /etc/securetty"
+    severity: "High"
+
+  - id: "1.2"
+    description: "Install Tree"
+    check: "apt install --list | grep tree"
+    fix: "apt install tree -y"
+    severity: "Medium"

@@ -1,0 +1,7 @@
+Django
+djangorestframework
+PyYAML
+psycopg2  # For PostgreSQL
+gunicorn  # For production deployment
+reportlab
+paramiko

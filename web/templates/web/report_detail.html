@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h2>Report Details - {{ report.system_name }}</h2>
+        <p>Scan Date: {{ report.scan_date }}</p>
+        <p>Compliance Score: {{ report.compliance_score }}%</p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Rule ID</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Fix Command</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rule in report.report_data %}
+                <tr>
+                    <td>{{ rule.id }}</td>
+                    <td>{{ rule.description }}</td>
+                    <td>
+                        <span class="badge {% if rule.status == 'PASS' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ rule.status }}
+                        </span>
+                    </td>
+                    <td><code>{{ rule.fix }}</code></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No rules found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        <a href="{% url 'fix_issues' report.id %}" class="btn btn-danger">Fix Issues</a>
+        <a href="{% url 'download_report' report.id %}" class="btn btn-success">Download PDF Report</a>
+    </div>
+</body>
+</html>
